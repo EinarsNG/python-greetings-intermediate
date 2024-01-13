@@ -74,7 +74,7 @@ def build_docker(String tag, String file) {
 def test(String env) {
   echo "Testing environment... $env"
   sh "docker run --network=host -t -d --name api_tests_runner_$env einarsngalejs/api-tests-runner:latest"
-  sh "docker exec api_tests_runner_$env cucumber PLATFORM=$env --format html --out test-output/report.html
+  sh "docker exec api_tests_runner_$env cucumber PLATFORM=$env --format html --out test-output/report.html"
   sh "docker cp api_tests_runner_$env:/api-tests/test-output/report.html report_$env.html"
   sh "docker rm -rf api_tests_runner_$env"
 }
