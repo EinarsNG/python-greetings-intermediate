@@ -51,17 +51,16 @@ pipeline {
         }
       }
     }
-
-    post {
-      failure {
-        script {
-          echo "Pipeline failed... sending notification"
-          // invoke discord plugin
-        }
+  }
+  post {
+    failure {
+      script {
+        echo "Pipeline failed... sending notification"
+        // invoke discord plugin
       }
-      cleanup {
-        echo "Cleaning up..."
-      }
+    }
+    cleanup {
+      echo "Cleaning up..."
     }
   }
 }
