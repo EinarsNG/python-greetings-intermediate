@@ -27,7 +27,7 @@ pipeline {
     stage('test-dev') {
       steps {
         script {
-          test("dev")
+          test("DEV")
         }
       }
     }
@@ -46,7 +46,7 @@ pipeline {
     stage('test-prod') {
       steps {
         script {
-          test("prod")
+          test("PRD")
         }
       }
     }
@@ -73,16 +73,15 @@ def build_docker(String tag, String file) {
 
 def test(String env) {
   echo "Testing environment... $env"
-  // docker run
-  // docker exec
-  // docker cp
-  // extract report logic
-  // docker cleanup
+  sh "docker run --network=host -t -d --name api_tests_runner_$env einarsngalejs/api-tests-runner:latest"
+  sh "docker exec api_tests_runner_$env cucumber PLATFORM=$env --format html --out test-output/report.html
+  sh "docker cp api_tests_runner_$env:/api-tests/test-output/report.html report_$env.html"
+  sh "docker rm -rf api_tests_runner_$env"
 }
 
 def deploy(String env) {
   echo "Deploying environment... $env"
   sh "kubectl set image deployment python-greetings-$env python-greetings-$env-pod=einarsngalejs/python-greetings-app:$GIT_COMMIT"
-  sh "kubectl scale deploy python-greetings-$env --replicas=0"
-  sh "kubectl scale deploy python-greetings-$env --replicas=2"
+  //sh "kubectl scale deploy python-greetings-$env --replicas=0"
+  //sh "kubectl scale deploy python-greetings-$env --replicas=2"
 }
