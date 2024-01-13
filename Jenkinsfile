@@ -35,8 +35,16 @@ pipeline {
       }
     }
     stage('approval') {
+      agent none
       steps {
         echo "waiting for approval"
+        input {
+          message: 'How long to wait for deploy to prod?'
+          submitter: 'egalejs'
+          parameters {
+              choice(name: 'deploymentSleepDelay', defaultValue: '0', choices: ['0', '1', '5', '10'], description: 'How long to wait for deploy?')
+          }
+        }
       }
     }
     stage('deploy-prod') {
