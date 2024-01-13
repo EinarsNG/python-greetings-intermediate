@@ -13,7 +13,7 @@ pipeline {
         script {
           echo "Build $GIT_COMMIT"
           echo "Building python-greetings-app"
-          build_docker("einarsngalejs/python-greetings-app", "Dockerfile")
+          build_docker("einarsngalejs/python-greetings-app:$GIT_COMMIT", "Dockerfile")
         }
       }
     }
@@ -66,9 +66,9 @@ pipeline {
 
 def build_docker(String tag, String file) {
   echo "Building $tag image for api-tests"
-  sh "docker build --no-cache -t $tag:$GIT_COMMIT . -f $file"
+  sh "docker build --no-cache -t $tag . -f $file"
   sh "docker login -u $DOCKER_USER -p \"$DOCKER_PASS\""
-  sh "docker push $tag:$GIT_COMMIT"
+  sh "docker push $tag"
 }
 
 def test(String env) {
