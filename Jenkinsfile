@@ -40,6 +40,9 @@ pipeline {
       }
     }
     stage('deploy-prod') {
+      when {
+        expression { params.PROD_DEPLOY == 'Yes' }
+      }
       steps {
         script {
           deploy("prod")
@@ -47,6 +50,9 @@ pipeline {
       }
     }
     stage('test-prod') {
+      when {
+        expression { params.PROD_DEPLOY == 'Yes' }
+      }
       steps {
         script {
           test("PRD")
