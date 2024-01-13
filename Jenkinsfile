@@ -66,7 +66,7 @@ pipeline {
 
 def build_docker(String tag, String file) {
   echo "Building $tag image for api-tests"
-  sh "docker build --no-cache -t $tag . -f $file"
+  sh "docker build --no-cache -t $tag:$GIT_COMMIT . -f $file"
   sh "docker login -u $DOCKER_USER -p \"$DOCKER_PASS\""
   sh "docker push $tag:$GIT_COMMIT"
 }
