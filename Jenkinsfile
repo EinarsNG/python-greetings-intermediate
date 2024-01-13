@@ -11,6 +11,7 @@ pipeline {
     stage('build-app') {
       steps {
         script {
+          echp "Build $GIT_COMMIT"
           echo "Building python-greetings-app"
           build_docker("einarsngalejs/python-greetings-app", "Dockerfile")
         }
@@ -67,7 +68,7 @@ def build_docker(String tag, String file) {
   echo "Building $tag image for api-tests"
   sh "docker build --no-cache -t $tag . -f $file"
   sh "docker login -u $DOCKER_USER -p \"$DOCKER_PASS\""
-  sh "docker push $tag:latest"
+  sh "docker push $tag:$GIT_COMMIT"
 }
 
 def test(String env) {
@@ -81,5 +82,5 @@ def test(String env) {
 
 def deploy(String env) {
   echo "Deploying environment... $env"
-  sh "kubectl set image deployment python-greetings-$env python-greetings-$env-pod=einarsngalejs/python-greetings-app:latest"
+  sh "kubectl set image deployment python-greetings-$env python-greetings-$env-pod=einarsngalejs/python-greetings-app:$GIT_COMMIT"
 }
