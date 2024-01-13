@@ -37,7 +37,7 @@ pipeline {
     stage('approval') {
       agent none
       steps {
-        echo "waiting for approval"
+        //echo "waiting for approval"
         input {
           message: 'How long to wait for deploy to prod?'
           submitter: 'egalejs'
