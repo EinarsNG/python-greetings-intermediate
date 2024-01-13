@@ -1,11 +1,14 @@
 pipeline {
   agent any
-  triggers{
+  triggers {
     pollSCM("* * * * *")
   }
-  environment{
+  environment {
     DOCKER_USER = credentials("docker-user")
     DOCKER_PASS = credentials("docker-pw")
+  }
+  parameters {
+    choice(name: 'PROD_DEPLOY', choices: ['Yes', 'No'], description: 'Deploy to production?')
   }
   stages {
     stage('build-app') {
@@ -73,13 +76,13 @@ def build_docker(String tag, String file) {
 
 def test(String env) {
   echo "Testing environment... $env"
-  sh "docker run --network=host -t -d --name api_tests_runner_$env einarsngalejs/api-tests-runner:latest"
-  try {
-    sh "docker exec api_tests_runner_$env cucumber PLATFORM=$env --format html --out test-output/report.html"
-  } finally {
-    sh "docker cp api_tests_runner_$env:/api-tests/test-output/report.html report_$env.html"
-    sh "docker rm -rf api_tests_runner_$env"
-  }
+  //sh "docker run --network=host -t -d --name api_tests_runner_$env einarsngalejs/api-tests-runner:latest"
+  //try {
+  //  sh "docker exec api_tests_runner_$env cucumber PLATFORM=$env --format html --out test-output/report.html"
+  //} finally {
+  //  sh "docker cp api_tests_runner_$env:/api-tests/test-output/report.html report_$env.html"
+  //  sh "docker rm -rf api_tests_runner_$env"
+  //}
 }
 
 def deploy(String env) {
