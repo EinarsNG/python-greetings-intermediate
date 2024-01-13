@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: python-greetings-dev-pod
-        image: mtararujs/python-greetings-app
+        image: einarsngalejs/python-greetings-app
         ports:
         - containerPort: 3000

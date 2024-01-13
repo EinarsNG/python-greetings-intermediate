@@ -10,13 +10,14 @@ pipeline {
   stages {
     stage('build-app') {
       steps {
-        echo "building app"
-        build_docker("einarsngalejs/python-greetings-app", "Dockerfile")
+        script {
+          echo "Building python-greetings-app"
+          build_docker("einarsngalejs/python-greetings-app", "Dockerfile")
+        }
       }
     }
     stage('deploy-dev') {
       steps {
-        echo "deploying app"
         script {
           deploy("DEV")
         }
@@ -24,7 +25,6 @@ pipeline {
     }
     stage('test-dev') {
       steps {
-        echo "testing app"
         script {
           test("DEV")
         }
@@ -37,7 +37,6 @@ pipeline {
     }
     stage('deploy-prod') {
       steps {
-        echo "deploying app prod"
         script {
           deploy("PROD")
         }
@@ -45,7 +44,6 @@ pipeline {
     }
     stage('test-prod') {
       steps {
-        echo "testing app prod"
         script {
           test("DEV")
         }
@@ -83,5 +81,5 @@ def test(String env) {
 
 def deploy(String env) {
   echo "Deploying environment... $env"
-  // kubectl set image ...
+  sh "kubectl set image deployment python-greetings-$env python-greetings-$env-pod=einarsngalejs/python-greetings-app:latest"
 }
