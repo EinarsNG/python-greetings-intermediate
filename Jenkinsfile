@@ -11,7 +11,7 @@ pipeline {
     stage('build-app') {
       steps {
         script {
-          echp "Build $GIT_COMMIT"
+          echo "Build $GIT_COMMIT"
           echo "Building python-greetings-app"
           build_docker("einarsngalejs/python-greetings-app", "Dockerfile")
         }
