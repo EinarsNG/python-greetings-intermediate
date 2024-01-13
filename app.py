@@ -3,6 +3,7 @@ import redis
 
 app = Flask(__name__)
 redis_client = redis.StrictRedis(host='redis-service', port=6379, db=0, decode_responses=True)
+redis_client.delete("latest_greeting")
 
 def get_greetings_from_redis():
     cached_greeting = redis_client.get('latest_greeting')
@@ -10,7 +11,7 @@ def get_greetings_from_redis():
         return cached_greeting
     else:
         # If the greeting is not cached in Redis, fetch it and cache it
-        greeting = "Welcome to CI/CD + Docker Course! Some changes were applied!"
+        greeting = "Welcome to CI/CD + Docker Course! Some changes were applied! Jan13 18:08"
         redis_client.set('latest_greeting', greeting)
         return greeting
 
