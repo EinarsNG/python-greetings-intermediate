@@ -19,14 +19,14 @@ pipeline {
     stage('deploy-dev') {
       steps {
         script {
-          deploy("DEV")
+          deploy("dev")
         }
       }
     }
     stage('test-dev') {
       steps {
         script {
-          test("DEV")
+          test("dev")
         }
       }
     }
@@ -38,14 +38,14 @@ pipeline {
     stage('deploy-prod') {
       steps {
         script {
-          deploy("PROD")
+          deploy("prod")
         }
       }
     }
     stage('test-prod') {
       steps {
         script {
-          test("DEV")
+          test("prod")
         }
       }
     }
