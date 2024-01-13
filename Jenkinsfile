@@ -37,13 +37,10 @@ pipeline {
     stage('approval') {
       agent none
       steps {
-        echo "waiting for approval"
-        input {
-          message 'How long to wait for deploy to prod?'
-          submitter 'egalejs'
-          parameters {
-              choice(name: 'deploymentSleepDelay', defaultValue: '0', choices: ['0', '1', '5', '10'], description: 'How long to wait for deploy?')
-          }
+        script {
+          echo "waiting for approval"
+          def deploymentSleepDelay = input id: 'Deploy', message: 'Proceed with PROD deploy?', submitter: 'egalejs'
+                                        parameters: [choice(choices: ['0', '1', '5', '10'], description: 'Minutes to wait before deploy to prod?', name: "DEPLOY_DELAY")]
         }
       }
     }
