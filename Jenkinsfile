@@ -76,9 +76,7 @@ pipeline {
   }
   post {
     always {
-      script {
-        notify("123", $WEBHOOK_URL)
-      }
+      notify("123", $WEBHOOK_URL)
     }
     failure {
       script {
@@ -118,11 +116,13 @@ def deploy(String env) {
 }
 
 def notify(String text, String url) {
-  discordSend {
-    description "Jenkins Pipeline Build"
-    link env.BUILD_URL
-    result currentBuild.currentResult
-    title JOB_NAME
-    webhookURL "$url"
+  script {
+    discordSend {
+      description "Jenkins Pipeline Build"
+      link env.BUILD_URL
+      result currentBuild.currentResult
+      title JOB_NAME
+      webhookURL "$url"
+    }
   }
 }
