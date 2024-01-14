@@ -6,6 +6,7 @@ pipeline {
   environment {
     DOCKER_USER = credentials("docker-user")
     DOCKER_PASS = credentials("docker-pw")
+    WEBHOOK_URL = credentials("discord-webhook")
   }
   parameters {
     choice(name: 'PROD_DEPLOY', choices: ['Yes', 'No'], description: 'Deploy to production?')
@@ -74,6 +75,15 @@ pipeline {
     }
   }
   post {
+    always {
+      discordSend {
+        description "Jenkins Pipeline Build"
+        link env.BUILD_URL
+        result currentBuild.currentResult
+        title: JOB_NAME
+        webhookURL "$WEBHOOK_URL"
+      }
+    }
     failure {
       script {
         echo "Pipeline failed... sending notification"
