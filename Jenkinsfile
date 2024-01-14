@@ -11,19 +11,6 @@ pipeline {
     choice(name: 'PROD_DEPLOY', choices: ['Yes', 'No'], description: 'Deploy to production?')
   }
   stages {
-    stage('Example') {
-            input {
-                message "Should we continue?"
-                ok "Yes, we should."
-                submitter "alice,bob"
-                parameters {
-                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-                }
-            }
-            steps {
-                echo "Hello, ${PERSON}, nice to meet you."
-            }
-    }
     stage('build-app') {
       steps {
         script {
@@ -49,12 +36,19 @@ pipeline {
     }
     stage('approval') {
       agent none
+      input {
+          message "How long to wait?"
+          submitter "egalejs"
+          parameters {
+              choice(name: 'DEPLOY_DELAY', choices: ['0', '1', '5', '10'], description: 'Minutes to wait before deploy to prod?')
+          }
+      }
       steps {
         script {
           echo "waiting for approval"
-          def deploymentSleepDelay = input id: 'Deploy', message: 'How long to wait?', submitter: 'egalejs',
-                                        parameters: [choice(choices: ['0', '1', '5', '10'], description: 'Minutes to wait before deploy to prod?', name: "DEPLOY_DELAY")]
-          sleep time: deploymentSleepDelay.toInteger(), unit: 'MINUTES'
+          //def deploymentSleepDelay = input id: 'Deploy', message: 'How long to wait?', submitter: 'egalejs',
+          //                              parameters: [choice(choices: ['0', '1', '5', '10'], description: 'Minutes to wait before deploy to prod?', name: "DEPLOY_DELAY")]
+          sleep time: DEPLOY_DELAY.toInteger(), unit: 'MINUTES'
         }
       }
     }
