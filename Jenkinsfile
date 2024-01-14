@@ -80,7 +80,7 @@ pipeline {
         description "Jenkins Pipeline Build"
         link env.BUILD_URL
         result currentBuild.currentResult
-        title: JOB_NAME
+        title JOB_NAME
         webhookURL "$WEBHOOK_URL"
       }
     }
