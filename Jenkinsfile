@@ -73,6 +73,17 @@ pipeline {
         }
       }
     }
+    stage('test-dummy-external') {
+      when {
+        expression { params.PROD_DEPLOY == 'Yes' }
+      }
+      steps {
+        build job: 'dummy-pipeline', parameters: [
+          string(name: "ENVIRONMENT", value: "PRD")
+        ]
+      }
+    }
+
   }
   post {
     always {
