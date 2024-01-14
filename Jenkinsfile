@@ -41,7 +41,7 @@ pipeline {
           echo "waiting for approval"
           def deploymentSleepDelay = input id: 'Deploy', message: 'How long to wait?', submitter: 'egalejs',
                                         parameters: [choice(choices: ['0', '1', '5', '10'], description: 'Minutes to wait before deploy to prod?', name: "DEPLOY_DELAY")]
-          sleep time: params.DEPLOY_DEPLAY.toInteger(), unit: 'MINUTES'
+          sleep time: deploymentSleepDelay.toInteger(), unit: 'MINUTES'
         }
       }
     }
