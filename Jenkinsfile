@@ -76,7 +76,7 @@ pipeline {
   }
   post {
     always {
-      notify()
+      notify("123")
     }
     failure {
       script {
