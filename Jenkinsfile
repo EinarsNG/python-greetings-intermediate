@@ -30,14 +30,16 @@ pipeline {
     }
     stage('test-dev') {
       parralel {
-        stage("Tests for new Greetings suite") {
-          script {
-            test("DEV")
+        steps {
+          stage("Tests for new Greetings suite") {
+            script {
+              test("DEV")
+            }
           }
-        }
-        stage("Tests for old Greetings suite") {
-          script {
-            test("DEV")
+          stage("Tests for old Greetings suite") {
+            script {
+              test("DEV")
+            }
           }
         }
       }
