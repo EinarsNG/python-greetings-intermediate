@@ -76,9 +76,8 @@ pipeline {
   }
   post {
     always {
-      sh "echo $WEBHOOK_URL"
       script {
-        notify("123")
+        notify("123", $WEBHOOK_URL)
       }
     }
     failure {
@@ -118,12 +117,12 @@ def deploy(String env) {
   //sh "kubectl scale deploy python-greetings-$env --replicas=2"
 }
 
-def notify(String text) {
+def notify(String text, String url) {
   discordSend {
     description "Jenkins Pipeline Build"
     link env.BUILD_URL
     result currentBuild.currentResult
     title JOB_NAME
-    webhookURL "$WEBHOOK_URL"
+    webhookURL "$url"
   }
 }
