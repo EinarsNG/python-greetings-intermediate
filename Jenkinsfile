@@ -117,6 +117,6 @@ def deploy(String env) {
 
 def discordNotify() {
   script {
-    discordSend description: "Jenkins Pipeline Build: ${env.GIT_COMMIT}", link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: env.WEBHOOK_URL
+    discordSend description: "Jenkins Pipeline Build: https://github.com/EinarsNG/python-greetings-intermediate/commit/${env.GIT_COMMIT}", link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: env.WEBHOOK_URL
   }
 }
