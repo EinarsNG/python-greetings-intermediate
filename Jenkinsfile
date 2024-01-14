@@ -76,6 +76,7 @@ pipeline {
   }
   post {
     always {
+      echo $WEBHOOK_URL
       script {
         discordSend {
           description "Jenkins Pipeline Build"
