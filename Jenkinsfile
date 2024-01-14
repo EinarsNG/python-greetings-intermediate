@@ -82,7 +82,7 @@ pipeline {
           link env.BUILD_URL
           result currentBuild.currentResult
           title JOB_NAME
-          webhookURL "$WEBHOOK_URL"
+          webhookURL $WEBHOOK_URL
         }
       }
     }
