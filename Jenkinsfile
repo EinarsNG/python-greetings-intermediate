@@ -33,14 +33,16 @@ pipeline {
         stage("Tests for new Greetings suite") {
           steps {
             script {
-              test("DEV")
+              def tbs = load "testBySuites.groovy"
+              tbs.testBySuites("DEV", "NEW")
             }
           }
         }
         stage("Tests for old Greetings suite") {
           steps {
             script {
-              test("DEV")
+              def tbs = load "testBySuites.groovy"
+              tbs.testBySuites("DEV", "OLD")
             }
           }
         }
