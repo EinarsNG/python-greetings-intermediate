@@ -118,6 +118,7 @@ def deploy(String env) {
 }
 
 def notify(String text) {
+  echo $WEBHOOK_URL
   discordSend {
     description "Jenkins Pipeline Build"
     link env.BUILD_URL
