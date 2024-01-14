@@ -29,7 +29,7 @@ pipeline {
       }
     }
     stage('test-dev') {
-      parralel {
+      parallel {
         stage("Tests for new Greetings suite") {
           steps {
             script {
