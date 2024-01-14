@@ -122,7 +122,7 @@ def notify(String text) {
       link env.BUILD_URL
       result currentBuild.currentResult
       title JOB_NAME
-      webhookURL "${env.WEBHOOK_URL}"
+      webhookURL "http://localhost:9955"
     }
   }
 }
