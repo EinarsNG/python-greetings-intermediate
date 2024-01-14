@@ -33,7 +33,7 @@ pipeline {
         stage("Tests for new Greetings suite") {
           steps {
             script {
-              def tbs = load "testBySuites.groovy"
+              def tbs = load("testBySuites.groovy")
               tbs.testBySuites("DEV", "NEW")
             }
           }
@@ -41,7 +41,7 @@ pipeline {
         stage("Tests for old Greetings suite") {
           steps {
             script {
-              def tbs = load "testBySuites.groovy"
+              def tbs = load("testBySuites.groovy")
               tbs.testBySuites("DEV", "OLD")
             }
           }
