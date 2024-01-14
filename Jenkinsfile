@@ -116,13 +116,7 @@ def deploy(String env) {
 }
 
 def notify(String text) {
-  //script {
-    discordSend {
-      description "Jenkins Pipeline Build"
-      link env.BUILD_URL
-      result currentBuild.currentResult
-      title JOB_NAME
-      webhookURL "http://localhost:9956"
-    }
-  //}
+  script {
+    discordSend description: "Jenkins Pipeline Build", link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: "http://localhost:9956"
+  }
 }
