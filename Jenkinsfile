@@ -76,7 +76,7 @@ pipeline {
   }
   post {
     always {
-      notify()
+      discordNotify()
     }
     failure {
       script {
@@ -115,7 +115,7 @@ def deploy(String env) {
   //sh "kubectl scale deploy python-greetings-$env --replicas=2"
 }
 
-void notify() {
+def discordNotify() {
   script {
     discordSend description: "Jenkins Pipeline Build: ${env.GIT_COMMIT}", link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: env.WEBHOOK_URL
   }
