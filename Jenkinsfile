@@ -76,12 +76,14 @@ pipeline {
   }
   post {
     always {
-      discordSend {
-        description "Jenkins Pipeline Build"
-        link env.BUILD_URL
-        result currentBuild.currentResult
-        title JOB_NAME
-        webhookURL "$WEBHOOK_URL"
+      script {
+        discordSend {
+          description "Jenkins Pipeline Build"
+          link env.BUILD_URL
+          result currentBuild.currentResult
+          title JOB_NAME
+          webhookURL "$WEBHOOK_URL"
+        }
       }
     }
     failure {
