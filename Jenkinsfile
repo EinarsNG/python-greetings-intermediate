@@ -29,9 +29,16 @@ pipeline {
       }
     }
     stage('test-dev') {
-      steps {
-        script {
-          test("DEV")
+      parralel {
+        stage("Tests for new Greetings suite") {
+          script {
+            test("DEV")
+          }
+        }
+        stage("Tests for old Greetings suite") {
+          script {
+            test("DEV")
+          }
         }
       }
     }
